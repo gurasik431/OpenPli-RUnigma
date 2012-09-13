@@ -84,19 +84,21 @@ echo "---------------------------------------"
 echo "   1) STM 24 P0207"
 echo "   2) STM 24 P0210"
 echo "   3) STM 24 P0211"
+echo "   4) STM 24 P0302"
 echo ""
 case $2 in
-        [1-3] | 1[0-9]) REPLY=$2
+        [1-4] | 1[0-9]) REPLY=$2
         echo -e "\nВыбранное ядро: $REPLY\n"
         ;;
         *)
-        read -p "Выберите ядро (1-3)? ";;
+        read -p "Выберите ядро (1-4)? ";;
 esac
 
 case "$REPLY" in
 	1) KERNEL="--enable-stm24 --enable-p0207";STMFB="stm24";;
 	2) KERNEL="--enable-stm24 --enable-p0210";STMFB="stm24";;
 	3) KERNEL="--enable-stm24 --enable-p0211";STMFB="stm24";;
+	4) KERNEL="--enable-stm24 --enable-p0302";STMFB="stm24";;
 	*) KERNEL="--enable-stm24 --enable-p0210";STMFB="stm24";;
 esac
 CONFIGPARAM="$CONFIGPARAM $KERNEL"
@@ -238,8 +240,8 @@ esac
 echo ""
 echo -e "\nПоддержка внешнего LCD-дисплея:"
 echo "---------------------------------------"
-echo "   1) С поддержкой LCD-дисплея"
-echo "   2) Без поддержки LCD-дисплея"
+echo "   1) Без поддержки LCD-дисплея"
+echo "   2) С поддержкой LCD-дисплея"
 echo ""
 case $7 in
         [1-2]) REPLY=$7
