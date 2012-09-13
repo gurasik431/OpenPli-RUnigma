@@ -230,6 +230,7 @@ endif
 ifdef  HL101
 obj-y	+= smartcard/
 obj-y	+= cpu_frequ/
+obj-y   += frontends/lnb/
 endif
 
 ifdef OCTAGON1008

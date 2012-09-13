@@ -454,6 +454,7 @@ release_hl101: release_common_utils
 	echo "hl101" > $(prefix)/release/etc/hostname
 	cp $(buildprefix)/root/release/halt_hl101 $(prefix)/release/etc/init.d/halt
 	chmod 755 $(prefix)/release/etc/init.d/halt
+	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/frontends/lnb/lnb.ko $(prefix)/release/lib/modules/
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/frontcontroller/proton/proton.ko $(prefix)/release/lib/modules/
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/frontends/*.ko $(prefix)/release/lib/modules/
 	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/stgfb/stmfb/stmcore-display-stx7109c3.ko $(prefix)/release/lib/modules/
