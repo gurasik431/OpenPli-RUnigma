@@ -1,0 +1,17 @@
+diff -Nur '--exclude=.git' '--exclude=tuxtxt' enigma2-nightly.org/lib/python/Screens/InfoBarGenerics.py enigma2-nightly.patched/lib/python/Screens/InfoBarGenerics.py
+--- enigma2-nightly.org/lib/python/Screens/InfoBarGenerics.py	2012-03-20 01:26:26.547115310 -0700
++++ enigma2-nightly.patched/lib/python/Screens/InfoBarGenerics.py	2012-03-20 01:26:30.307115296 -0700
+@@ -432,8 +432,13 @@
+ 				"historyBack": (self.historyBack, _("previous channel in history")),
+ 				"historyNext": (self.historyNext, _("next channel in history")),
+ 				"openServiceList": (self.openServiceList, _("open servicelist")),
++				"openServiceListFAV": (self.openServiceListFAV, _("open servicelist")),
+ 			})
+ 
++	def openServiceListFAV(self):
++		self.servicelist.showFavourites()
++		self.session.execDialog(self.servicelist)
++
+ 	def showTvChannelList(self, zap=False):
+ 		self.servicelist.setModeTv()
+ 		if zap:
