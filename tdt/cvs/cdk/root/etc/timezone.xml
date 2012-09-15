@@ -36,12 +36,13 @@
 	<zone name="(GMT+02:00) Athens, Istanbul, Minsk" zone="Istanbul" />
 	<zone name="(GMT+02:00) Bucharest" zone="Istanbul" />
 	<zone name="(GMT+02:00) Harare, Pretoria" zone="Harare" />
-	<zone name="(GMT+02:00) Helsinki, Kyiv, Sofia" zone="Istanbul" />
+	<zone name="(GMT+02:00) Kiev, Helsinki, Sofia" zone="Kiev" />
+	<zone name="(GMT+03:00) Kiev+1, Helsinki, Sofia" zone="Kiev" />
 	<zone name="(GMT+02:00) Riga, Tallinn, Vilnius" zone="Istanbul" />
 	<zone name="(GMT+02:00) Jerusalem" zone="Jerusalem" />
 	<zone name="(GMT+03:00) Baghdad" zone="Baghdad" />
 	<zone name="(GMT+03:00) Kuwait, Riyadh" zone="Riyadh" />
-	<zone name="(GMT+03:00) Moscow, St. Petersburg, Volgograd" zone="Moscow" />
+	<zone name="(GMT+04:00) Moscow, St. Petersburg, Volgograd" zone="Moscow" />
 	<zone name="(GMT+03:00) Nairobi" zone="Nairobi" />
 	<zone name="(GMT+03:30) Tehran" zone="Tehran" />
 	<zone name="(GMT+04:00) Abu Dhabi, Muscat" zone="Muscat" />
