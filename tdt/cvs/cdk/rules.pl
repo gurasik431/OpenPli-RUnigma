@@ -46,15 +46,15 @@ sub process_make_depends (@)
 
   foreach ( @_ )
   {
-    if ( $_ =~ m#\.deb\.diff\.(bz2|gz)$# )
+    if ( $_ =~ m#\.deb\.diff\.(bz2|gz|xz)$# )
     {
       $output .= "Patches/" . $_ . " ";
     }
-    elsif ( $_ =~ m#\.(diff|tar)\.(bz2|gz)$# )
+    elsif ( $_ =~ m#\.(diff|tar)\.(bz2|gz|xz)$# )
     {
       $output .= "\\\$(archivedir)/" . $_ . " ";
     }
-    elsif ( $_ =~ m#\.(bz2|gz)$# )
+    elsif ( $_ =~ m#\.(bz2|gz|xz)$# )
     {
       $output .= "\\\$(archivedir)/" . $_ . " ";
     }
@@ -124,9 +124,14 @@ sub process_make_prepare (@)
 
     if ( $_[0] eq "extract" )
     {
+
       if ( $_[1] =~ m#\.tar\.bz2$# )
       {
         $output .= "bunzip2 -cd \\\$(archivedir)/" . $_[1] . " | TAPE=- tar -x";
+      }
+      elsif ( $_[1] =~ m#\.tar\.xz$# )
+      {
+        $output .= "xz -cd \\\$(archivedir)/" . $_[1] . " | TAPE=- tar -x";
       }
       elsif ( $_[1] =~ m#\.tar\.gz$# )
       {
@@ -192,6 +197,10 @@ sub process_make_prepare (@)
       elsif ( $_[1] =~ m#\.tar\.gz$# )
       {
         $output .= "gunzip -cd \\\$(archivedir)/" . $_[1] . " | tar -x";
+      }
+      elsif ( $_[1] =~ m#\.tar\.xz$# )
+      {
+        $output .= "xz -cd \\\$(archivedir)/" . $_[1] . " | tar -x";
       }
       elsif ( $_[1] =~ m#\.exe$# )
       {
