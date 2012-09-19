@@ -78,6 +78,22 @@ release_xbmc_atevio7500: release_xbmc_common_utils
 	rm $(prefix)/release/lib/firmware/component_7111_mb618.fw
 
 #
+# release_hl101
+#
+release_xbmc_hl101: release_xbmc_common_utils
+	echo "hl101" > $(prefix)/release/etc/hostname
+	cp $(buildprefix)/root/release/halt_hl101 $(prefix)/release/etc/init.d/halt
+	chmod 755 $(prefix)/release/etc/init.d/halt
+	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/frontcontroller/proton/proton.ko $(prefix)/release/lib/modules/
+	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/frontends/*.ko $(prefix)/release/lib/modules/
+	cp $(targetprefix)/lib/modules/$(KERNELVERSION)/extra/stgfb/stmfb/stmcore-display-stx7109c3.ko $(prefix)/release/lib/modules/
+	cp $(targetprefix)/boot/video_7109.elf $(prefix)/release/boot/video.elf
+	cp $(targetprefix)/boot/audio_7109.elf $(prefix)/release/boot/audio.elf
+	cp $(targetprefix)/lib/firmware/dvb-fe-avl2108.fw $(prefix)/release/lib/firmware/
+	cp $(targetprefix)/lib/firmware/dvb-fe-stv6306.fw $(prefix)/release/lib/firmware/
+	rm -f $(prefix)/release/lib/firmware/dvb-fe-{cx24116,cx21143}.fw
+
+#
 # release_base
 #
 # the following target creates the common file base

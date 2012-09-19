@@ -1,0 +1,10 @@
+--- stm-cross-binutils.spec	2010-04-01 21:05:05.000000000 +0100
++++ stm-cross-binutils.spec_org	2012-04-01 21:55:37.841839856 +0100
+@@ -118,6 +118,7 @@
+ %cross_configure \
+        --enable-nls \
+        --disable-multilib \
++       --disable-werror \
+        --with-system-zlib \
+ %if "%{_stm_target_fpu}" == "yes"
+ %if_target_arch armv7 armv7_uclibc

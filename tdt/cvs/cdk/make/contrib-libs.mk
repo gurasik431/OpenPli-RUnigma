@@ -25,7 +25,7 @@ $(DEPDIR)/libz.do_compile: $(DEPDIR)/libz.do_prepare
 		./configure \
 			--prefix=/usr \
 			--shared && \
-		$(MAKE) all libz.a AR="$(target)-ar rc" CFLAGS="-fpic -O2"
+		$(MAKE) all libz.a AR="$(target)-ar " CFLAGS="-fpic -O2"
 	touch $@
 
 $(DEPDIR)/min-libz $(DEPDIR)/std-libz $(DEPDIR)/max-libz \
@@ -34,6 +34,57 @@ $(DEPDIR)/%libz: $(DEPDIR)/libz.do_compile
 	cd @DIR_libz@ && \
 		@INSTALL_libz@
 #	@DISTCLEANUP_libz@
+	[ "x$*" = "x" ] && touch $@ || true
+
+#
+# libffi
+#
+$(DEPDIR)/libffi.do_prepare: bootstrap @DEPENDS_libffi@
+	@PREPARE_libffi@
+	touch $@
+
+$(DEPDIR)/libffi.do_compile: $(DEPDIR)/libffi.do_prepare
+	cd @DIR_libffi@ && \
+		$(BUILDENV) \
+		./configure \
+			--build=$(build) \
+			--host=$(target) \
+			--prefix=/usr && \
+		$(MAKE)
+	touch $@
+
+$(DEPDIR)/min-libffi $(DEPDIR)/std-libffi $(DEPDIR)/max-libffi \
+$(DEPDIR)/libffi: \
+$(DEPDIR)/%libffi: $(DEPDIR)/libffi.do_compile
+	cd @DIR_libffi@ && \
+		@INSTALL_libffi@
+#	@DISTCLEANUP_libffi@
+	[ "x$*" = "x" ] && touch $@ || true
+
+#
+# pkg
+#
+$(DEPDIR)/pkg.do_prepare: bootstrap @DEPENDS_pkg@
+	@PREPARE_pkg@
+	touch $@
+
+$(DEPDIR)/pkg.do_compile: $(DEPDIR)/pkg.do_prepare
+	cd @DIR_pkg@ && \
+		$(BUILDENV) \
+		./configure \
+			--build=$(build) \
+			--host=$(target) \
+			--prefix=/usr \
+			--with-internal-glib && \
+		$(MAKE) all
+	touch $@
+
+$(DEPDIR)/min-pkg $(DEPDIR)/std-pkg $(DEPDIR)/max-pkg \
+$(DEPDIR)/pkg: \
+$(DEPDIR)/%pkg: $(DEPDIR)/pkg.do_compile
+	cd @DIR_pkg@ && \
+		@INSTALL_pkg@
+#	@DISTCLEANUP_pkg@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #
@@ -451,7 +502,7 @@ $(DEPDIR)/libvorbisidec: $(DEPDIR)/libvorbisidec.do_compile
 # libglib2
 # You need libglib2.0-dev on host system
 #
-$(DEPDIR)/glib2.do_prepare: bootstrap libz @DEPENDS_glib2@
+$(DEPDIR)/glib2.do_prepare: bootstrap libz libffi @DEPENDS_glib2@
 	@PREPARE_glib2@
 	touch $@
 
@@ -466,6 +517,7 @@ $(DEPDIR)/glib2.do_compile: $(DEPDIR)/glib2.do_prepare
 	cd @DIR_glib2@ && \
 		$(BUILDENV) \
 		CFLAGS="$(TARGET_CFLAGS) -Os" \
+		PKG_CONFIG=$(hostprefix)/bin/pkg-config \
 		./configure \
 			--cache-file=config.cache \
 			--disable-gtk-doc \
@@ -987,7 +1039,7 @@ $(DEPDIR)/%ffmpeg: $(DEPDIR)/ffmpeg.do_compile
 #
 # libass
 #
-$(DEPDIR)/libass.do_prepare: bootstrap freetype @DEPENDS_libass@
+$(DEPDIR)/libass.do_prepare: bootstrap freetype libfribidi @DEPENDS_libass@
 	@PREPARE_libass@
 	touch $@
 
@@ -1459,7 +1511,7 @@ $(DEPDIR)/%lxml: $(DEPDIR)/lxml.do_compile
 #
 # setuptools
 #
-$(DEPDIR)/setuptools.do_prepare: bootstrap @DEPENDS_setuptools@
+$(DEPDIR)/setuptools.do_prepare: bootstrap python @DEPENDS_setuptools@
 	@PREPARE_setuptools@
 	touch $@
 
@@ -1522,6 +1574,55 @@ $(DEPDIR)/%twistedweb2: $(DEPDIR)/twistedweb2.do_compile
 		PYTHONPATH=$(targetprefix)/usr/lib/python2.6/site-packages \
 		$(crossprefix)/bin/python ./setup.py install --root=$(targetprefix) --prefix=/usr
 #	@DISTCLEANUP_twistedweb2@
+	[ "x$*" = "x" ] && touch $@ || true
+
+#
+# pycrypto
+#
+$(DEPDIR)/pycrypto.do_prepare: bootstrap setuptools @DEPENDS_pycrypto@
+	@PREPARE_pycrypto@
+	touch $@
+
+$(DEPDIR)/pycrypto.do_compile: $(DEPDIR)/pycrypto.do_prepare
+	cd @DIR_pycrypto@ && \
+		$(BUILDENV) \
+		./configure \
+			--build=$(build) \
+			--host=$(target) \
+			--prefix=/usr
+	touch $@
+
+$(DEPDIR)/min-pycrypto $(DEPDIR)/std-pycrypto $(DEPDIR)/max-pycrypto \
+$(DEPDIR)/pycrypto: \
+$(DEPDIR)/%pycrypto: $(DEPDIR)/pycrypto.do_compile
+	cd @DIR_pycrypto@ && \
+		CC='$(target)-gcc' LDSHARED='$(target)-gcc -shared' \
+		PYTHONPATH=$(targetprefix)/usr/lib/python2.6/site-packages \
+		$(crossprefix)/bin/python ./setup.py install --root=$(targetprefix) --prefix=/usr
+	@DISTCLEANUP_pycrypto@
+	[ "x$*" = "x" ] && touch $@ || true
+
+#
+# pyusb
+#
+$(DEPDIR)/pyusb.do_prepare: bootstrap setuptools @DEPENDS_pyusb@
+	@PREPARE_pyusb@
+	touch $@
+
+$(DEPDIR)/pyusb.do_compile: $(DEPDIR)/pyusb.do_prepare
+	cd @DIR_pyusb@ && \
+		CC='$(target)-gcc' LDSHARED='$(target)-gcc -shared' \
+		PYTHONPATH=$(targetprefix)/usr/lib/python2.6/site-packages \
+		$(crossprefix)/bin/python ./setup.py build
+	touch $@
+
+$(DEPDIR)/min-pyusb $(DEPDIR)/std-pyusb $(DEPDIR)/max-pyusb \
+$(DEPDIR)/pyusb: \
+$(DEPDIR)/%pyusb: $(DEPDIR)/pyusb.do_compile
+	cd @DIR_pyusb@ && \
+		PYTHONPATH=$(targetprefix)/usr/lib/python2.6/site-packages \
+		$(crossprefix)/bin/python ./setup.py install --root=$(targetprefix) --prefix=/usr
+	@DISTCLEANUP_pyusb@
 	[ "x$*" = "x" ] && touch $@ || true
 
 #

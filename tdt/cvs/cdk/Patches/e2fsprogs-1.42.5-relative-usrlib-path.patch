@@ -1,0 +1,11 @@
+--- e2fsprogs-1.42.5.orig/lib/Makefile.elf-lib	2009-08-13 03:39:57.000000000 +0200
++++ e2fsprogs-1.42.5/lib/Makefile.elf-lib	2010-04-25 14:02:41.000000000 +0200
+@@ -47,7 +47,7 @@
+ 	$(Q) $(INSTALL_SYMLINK) $(ELF_INSTALL_DIR)/$(ELF_LIB) \
+ 		$(ELF_INSTALL_DIR)/$(ELF_SONAME) $(DESTDIR)
+ 	$(E) "	SYMLINK $(libdir)/$(ELF_IMAGE).so"
+-	$(Q) $(INSTALL_SYMLINK) $(ELF_INSTALL_DIR)/$(ELF_SONAME) \
++	$(Q) $(INSTALL_SYMLINK) ../../lib/$(ELF_SONAME) \
+ 		$(libdir)/$(ELF_IMAGE).so $(DESTDIR)
+ 	$(E) "	LDCONFIG
+ 	$(Q) -$(LDCONFIG)

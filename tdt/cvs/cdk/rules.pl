@@ -124,7 +124,6 @@ sub process_make_prepare (@)
 
     if ( $_[0] eq "extract" )
     {
-
       if ( $_[1] =~ m#\.tar\.bz2$# )
       {
         $output .= "bunzip2 -cd \\\$(archivedir)/" . $_[1] . " | TAPE=- tar -x";
