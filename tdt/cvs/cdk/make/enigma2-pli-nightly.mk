@@ -13,9 +13,9 @@ $(DEPDIR)/enigma2-pli-nightly.do_prepare:
 	rm -rf $(appsdir)/enigma2-nightly.patched; \
 	clear; \
 	echo ""; \
-	echo "Choose between the following revisions:"; \
+	echo "Выберите один из вариантов:"; \
 	echo "========================================================================================================"; \
-	echo " 0) Newest                 - E2 OpenPli gstreamer / libplayer3    (Can fail due to outdated patch)     "; \
+	echo " 0) Самый свежий вариант   - E2 OpenPli gstreamer / libplayer3    (Возможны проблемы с компиляцией)     "; \
 	echo " 1) Sat, 17 Mar 2012 19:51 - E2 OpenPli gstreamer              945aeb939308b3652b56bc6c577853369d54a537"; \
 	echo " 2) Sat, 18 Aug 2012 11:12 - E2 OpenPli gstreamer / libplayer3 4f3396b610f5524d85e06f51cbd3186b75f4b6d3"; \
 	echo " 3) Sat, 20 Aug 2012 19:08 - E2 OpenPli gstreamer / libplayer3 51a7b9349070830b5c75feddc52e97a1109e381e"; \
