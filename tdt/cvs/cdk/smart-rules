@@ -1318,7 +1318,7 @@ modem_scripts
 grab
   git
   {PN}-{PV}
-  git://github.com/technic/aio-grab.git
+  git://github.com/piterkadet/aio.git
   make:install:DESTDIR=PKDIR
 ;
 enigma2_pli
